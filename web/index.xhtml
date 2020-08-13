@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lomapalkkalaskuri</title>
+
+    </h:head>
+    <h:body>
+        <h:form id="form">
+
+            
+
+            <br/>
+            <p:panelGrid  columns="2" style="width: 600px">
+                <p:outputLabel for="palkkamuoto" value="Palkkamuoto: "  />
+
+                
+                <p:selectOneMenu id="palkkamuoto" value="#{model.palkkamuoto}" valueChangeListener="${model.menuValueChanged}" 
+                                 immediate="true" onchange='submit()' effect="drop">
+                    <f:selectItems value="#{model.menuNames}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel  value="Työsuhde"/>
+                <h:selectOneRadio label="Jatkuva työsuhde" validatorMessage="#{model.työSuhde}" valueChangeListener="${model.jatkuvaValueChanged}"
+                                  immediate="true" required="true" onchange="submit()">
+                    <f:selectItem itemLabel="Jatkuva" itemValue="true" />
+                    <f:selectItem itemLabel="Päätynyt" itemValue="false"/>
+                </h:selectOneRadio>
+                <p:outputLabel value="Työsuhde alkanut: " rendered="#{model.rendered}"/>
+                <p:calendar value="#{model.alkaisPäiväTempo}" valueChangeListener="${model.päiväValueChanged}" 
+                            immediate="true" onchange="submit()" rendered="#{model.rendered}" />
+                
+                <p:outputLabel value="#{model.maksuPäiväText}" rendered="#{model.rendered}"/>
+                <p:calendar value="#{model.maksuPäiväTempo}" valueChangeListener="${model.päiväValueChanged}" 
+                            immediate="true" onchange="submit()" rendered="#{model.rendered}"/>
+                
+                <p:outputLabel value="Aika: " rendered="#{model.rendered}"/>
+                <p:outputLabel value="${model.aika}" rendered="#{model.rendered}"/>
+
+                <p:outputLabel value="#{model.palkkamuotoText}" />
+                <p:inputText  value="#{model.palkka}"/>
+
+
+                <p:outputLabel value="lomapäivät" rendered="#{model.rendered}"/>
+                <p:inputText value="#{model.lomaPäivat}" rendered="#{model.rendered}"/>
+                
+                <p:outputLabel value="prosentti" rendered="#{model.notRendered}"/>
+                <p:inputText value="#{model.prosentti}" rendered="#{model.notRendered}"/>
+                
+                <p:outputLabel value="Loma Korvaus"/>
+                <p:outputLabel value="#{model.lomaKorvaus}"/>
+            </p:panelGrid>
+            <p:commandButton value="Laske" actionListener="#{model.laske}" ajax="false"/>
+
+        </h:form>
+
+    </h:body>
+</html>
+
